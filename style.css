@@ -1,0 +1,10 @@
+body {
+  background-image: url("assets/blackTile.png");
+  background-color: #4ecdc4;
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 200px;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Gotham";
+}
