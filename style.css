@@ -1,10 +1,37 @@
-body {
-  background-image: url("assets/yellowTile.png");
-  background-color: #00ffff; /*pinkTile: F89B29*/
-  background-repeat: repeat;
-  background-position: center;
-  background-size: 200px;
-  min-height: 100vh;
-  margin: 0;
-  font-family: "Gotham";
+body { 
+  background-color: #F89B29; /* PinkTile comment: F89B29, yellowTile: 00FFFF */ 
+  min-height: 100vh; 
+  margin: 0; 
+  font-family: "Gotham"; 
+  position: relative;
+}
+
+.openingAnimation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  
+  background-image: url("assets/pinkTile.png"); 
+  background-repeat: repeat; 
+  background-position: center; 
+  background-size: 282px; 
+  
+  animation: zoomAndFadeImage 2s ease-out forwards;
+}
+
+@keyframes zoomAndFadeImage {
+  0% {
+    background-size: 282px;
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    background-size: 300px;
+    opacity: 0;
+  }
 }
