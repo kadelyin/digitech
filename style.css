@@ -18,7 +18,7 @@ body {
 
   z-index: 9999;
   pointer-events: none;
-  animation: tileZoomAndFade 1.5s cubic-bezier(0.25, 1, 0.5, 1) backwards;
+  animation: tileZoomAndFade 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 @keyframes tileZoomAndFade {
@@ -28,6 +28,6 @@ body {
   }
   100% {
     background-size: 282px 282px;
-    opacity: 0.05;
+    opacity: 0.02;
   }
 }
