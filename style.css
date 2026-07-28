@@ -1,10 +1,35 @@
 body {
-  background-image: url("assets/blackTile.png");
-  background-color: #4ecdc4;
-  background-repeat: repeat;
-  background-position: center;
-  background-size: 200px;
-  min-height: 100vh;
+  position: relative;
+  background-color: #f89b29;
+  min-height: 110vh;
   margin: 0;
   font-family: "Gotham";
+}
+
+.openingAnimation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("assets/pinkTile.png");
+
+  /* Focuses the anchor point directly in the middle */
+  background-position: center;
+
+  z-index: 9999;
+  pointer-events: none;
+  animation: tileZoomAndFade 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes tileZoomAndFade {
+  0% {
+    background-size: 564px 564px;
+    opacity: 1;
+  }
+  100% {
+    background-size: 282px 282px;
+    opacity: 0.05;
+    /* visibility: hidden; */
+  }
 }
