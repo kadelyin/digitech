@@ -28,6 +28,6 @@ body {
   }
   100% {
     background-size: 282px 282px;
-    opacity: 0.02;
+    opacity: 0;
   }
 }
