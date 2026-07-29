@@ -23,7 +23,7 @@ body {
 
 @keyframes tileZoomAndFade {
   0% {
-    background-size: 564px 564px;
+    background-size: 290px 290px;
     opacity: 1;
   }
   100% {
