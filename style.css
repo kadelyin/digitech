@@ -27,11 +27,8 @@ body {
     background-size: 282px;
     opacity: 1;
   }
-  30% {
-    opacity: 0;
-  }
   100% {
-    background-size: 300px;
+    background-size: 200px;
     opacity: 0;
   }
 }
