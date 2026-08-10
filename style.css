@@ -1,10 +1,9 @@
 body {
   background-color: #f89b29;
   min-height: 100vh;
-  margin: 0;
   font-family: "Basic", sans-serif;
   position: relative;
-  overflow-x: hidden; /* Prevents accidental side-scrolling */
+  overflow-x: hidden; /* stops accidental side-scrolling */
 }
 
 #openingAnimation {
@@ -17,18 +16,18 @@ body {
   background-image: url("assets/pinkTile.png");
   background-repeat: repeat;
   background-position: center;
-  transform-origin: center;
-  transform: scale(1.2);
+  background-size: 100px auto;
   animation: smoothOut 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 @keyframes smoothOut {
   0% {
-    transform: scale(1);
-    opacity: 0.5;
+    background-size: 100px auto;
+    opacity: 0.25;
   }
   100% {
-    transform: scale(1.1);
+    /* scales the tiles up by 10% without moving the container */
+    background-size: 110px auto;
     opacity: 0.05;
   }
 }
