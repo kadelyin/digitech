@@ -1,43 +1,25 @@
-#openingAnimation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-
-  background-image: url("assets/pinkTile-nbg.png");
-  background-repeat: repeat;
-  background-position: top left;
-  background-size: 100px auto;
-
-  opacity: 1;
-  animation: smoothOut 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-play-state: paused;
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-@keyframes smoothOut {
-  0% {
-    background-size: 220px auto;
-    opacity: 1;
-  }
-  100% {
-    background-size: 210px auto;
-    opacity: 0.05;
-  }
+#bannerContainer {
+  position: fixed;
+  top: 20px;
+  left: 15px;
+  margin: 10px;
+  width: calc(100% - 20px);
+  max-width: 203px;
+  z-index: 6;
+  display: inline-block;
 }
 
 #banner {
-  margin: 10px;
-  position: sticky;
-  top: 20px;
-  left: 15px;
-
-  width: calc(100% - 20px);
-  max-width: 203px;
+  width: 100%;
+  height: auto;
   aspect-ratio: 203 / 59;
-
-  z-index: 5;
   background-image: url("assets/banner.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -50,6 +32,91 @@
   animation-play-state: paused;
 }
 
+#openingAnimation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-image: url("assets/pinkTile-nbg.png");
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: 100px auto;
+  opacity: 1;
+  pointer-events: none;
+  animation: smoothOut 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-play-state: paused;
+}
+
+#navButton {
+  position: fixed;
+  top: 20px;
+  right: 15px;
+  margin: 10px;
+  z-index: 6;
+  aspect-ratio: 59 / 59;
+  width: 100%;
+  height: auto;
+  max-width: 59px;
+  background-image: url("assets/Menu.png");
+
+  animation: fadeIn 1s ease-out forwards;
+  animation-play-state: paused;
+}
+
+#navSection {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background-color: #f89b29;
+  background-position: top center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#navSection.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#navSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 25px;
+}
+
+#navSection ul li a {
+  text-decoration: none;
+  font-family: "Archivo Black", sans-serif;
+  font-style: normal;
+  font-size: 3rem;
+  color: #ff0f7b;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+#navSection ul li a:hover {
+  color: #c41061;
+}
+
+#navSection ul li a.current {
+  color: #c41061;
+  font-style: italic;
+  font-size: 3.2rem;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -58,5 +125,16 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes smoothOut {
+  0% {
+    background-size: 220px auto;
+    opacity: 1;
+  }
+  100% {
+    background-size: 210px auto;
+    opacity: 0.1;
   }
 }
