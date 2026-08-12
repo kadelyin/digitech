@@ -1,3 +1,4 @@
+// loading
 window.addEventListener("load", () => {
   const opening = document.getElementById("openingAnimation");
   const banner = document.getElementById("banner");
@@ -8,6 +9,7 @@ window.addEventListener("load", () => {
   if (navButton) navButton.style.animationPlayState = "running";
 });
 
+// menu
 document.addEventListener("DOMContentLoaded", () => {
   const navButton = document.getElementById("navButton");
   const navSection = document.getElementById("navSection");
