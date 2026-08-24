@@ -13,7 +13,13 @@ body {
   margin: 10px;
   width: 203px;
   z-index: 6;
+  border-radius: 6px;
   display: block;
+}
+
+#bannerContainer:hover {
+  background-color: #f0006c;
+  outline: 10px solid #f0006c;
 }
 
 #banner {
@@ -56,6 +62,7 @@ body {
   aspect-ratio: 59 / 59;
   width: 100%;
   height: auto;
+  border-radius: 6px;
   max-width: 59px;
   background-image: url("assets/menu-invert.png");
   background-size: contain;
@@ -67,7 +74,7 @@ body {
 }
 
 #navButton:hover {
-  transform: scale(1.05);
+  background-color: #f0006c;
 }
 
 #navSection {
@@ -92,12 +99,14 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+  bottom: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  gap: 20px;
+  gap: 10px;
 }
 
 #navSection ul li a {
@@ -106,20 +115,25 @@ body {
   font-size: clamp(2rem, 8vw, 3.5rem);
   color: #00f084;
   display: inline-block;
-  transition:
-    transform 0.2s ease,
-    color 0.2s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  /* transition: all 0.1s cubic-bezier(0.42, 0, 1, 1); */
 }
 
 #navSection ul li a:hover {
-  color: #46ffaa;
+  color: #f0006c;
+  background-color: #00f084;
   transform: scale(1.03);
 }
 
 #navSection ul li a.current {
-  color: #00f084;
-  text-decoration: underline;
-  text-underline-offset: 8px;
+  /* color: #46ffaa; */
+  text-underline-offset: 10px;
+  text-decoration: underline solid #00f084 5px;
+}
+
+#navSection ul li a.current:hover {
+  text-decoration: underline solid #f0006c 5px;
 }
 
 @keyframes fadeIn {
