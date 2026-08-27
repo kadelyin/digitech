@@ -1,15 +1,31 @@
-// loading
-window.addEventListener("load", () => {
-  const opening = document.getElementById("openingAnimation");
-  const banner = document.getElementById("banner");
-  const navButton = document.getElementById("navButton");
+// loading animations
+window.addEventListener("load", async () => {
+  const timeline = [
+    { id: "openingAnimation", delay: 0 },
+    { id: "banner", delay: 600 },
+    { id: "navButton", delay: 600 },
+  ];
 
-  opening.style.animationPlayState = "running";
-  banner.style.animationPlayState = "running";
-  if (navButton) navButton.style.animationPlayState = "running";
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  let totalElapsed = 0;
+
+  for (const step of timeline) {
+    const element = document.getElementById(step.id);
+    const timeToWait = step.delay - totalElapsed;
+
+    if (timeToWait > 0) {
+      await wait(timeToWait);
+      totalElapsed = step.delay;
+    }
+
+    if (element) {
+      element.style.animationPlayState = "running";
+    }
+  }
 });
 
-// menu
+// navigation menu
 document.addEventListener("DOMContentLoaded", () => {
   const navButton = document.getElementById("navButton");
   const navSection = document.getElementById("navSection");
