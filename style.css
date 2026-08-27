@@ -45,11 +45,13 @@ body {
   z-index: 6;
   background-image: url("assets/greenTile.png");
   background-repeat: repeat;
-  background-position: center center;
-  background-size: 100px auto;
+  background-position: 0 0;
+  background-size: 220px 220px;
   opacity: 1;
   pointer-events: none;
-  animation: smoothOut 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation:
+    scrollAnim 12s linear infinite,
+    smoothOut 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-play-state: paused;
 }
 
@@ -185,5 +187,14 @@ body {
   100% {
     background-size: 210px auto;
     opacity: 0.05;
+  }
+}
+
+@keyframes scrollAnim {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -220px 0;
   }
 }
