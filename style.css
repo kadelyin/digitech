@@ -11,7 +11,7 @@ body {
   top: 0px;
   left: 5px;
   margin: 10px;
-  width: 203px;
+  width: 150px;
   z-index: 6;
   border-radius: 6px;
   display: block;
@@ -63,7 +63,7 @@ body {
   width: 100%;
   height: auto;
   border-radius: 6px;
-  max-width: 59px;
+  max-width: 44px;
   background-image: url("assets/menu-invert.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -131,9 +131,8 @@ body {
 }
 
 #navSection ul li a.current {
-  /* color: #46ffaa; */
-  text-underline-offset: 10px;
   text-decoration: underline solid #00f084 5px;
+  text-underline-offset: 10px;
 }
 
 #navSection ul li a.current:hover {
