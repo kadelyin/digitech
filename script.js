@@ -1,9 +1,9 @@
-// loading animations
+// loading animations + render after navButton starts
 window.addEventListener("load", async () => {
   const timeline = [
     { id: "openingAnimation", delay: 0 },
-    { id: "banner", delay: 200 },
-    { id: "navButton", delay: 200 },
+    { id: "banner", delay: 400 },
+    { id: "navButton", delay: 400 },
   ];
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -22,10 +22,17 @@ window.addEventListener("load", async () => {
     if (element) {
       element.style.animationPlayState = "running";
     }
+
+    // start rendering bibliography right after we start the navButton animation
+    if (step.id === "navButton") {
+      // small extra delay so navButton entrance feels finished before items appear
+      await wait(200);
+      renderBibliography();
+    }
   }
 });
 
-// navigation menu + bibliography
+// navigation menu
 document.addEventListener("DOMContentLoaded", () => {
   const navButton = document.getElementById("navButton");
   const navSection = document.getElementById("navSection");
@@ -51,10 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  renderBibliography();
+  // Do NOT call renderBibliography() here — it's called after navButton animation in window.load
 });
 
-// bibliography
+// bibliography data
 const bibliography = [
   {
     title: "1",
@@ -88,9 +95,10 @@ const bibliography = [
   },
 ];
 
-function createBiblioItem(item) {
+function createBiblioItem(item, index) {
+  const delay = (index * 0.15).toFixed(2) + "s";
   return `
-    <div class="biblio-item">
+    <div class="biblio-item" style="animation-delay: ${delay};">
       <img src="${item.img}" alt="${item.title}">
       <h3>${item.title} (${item.year})</h3>
       <p>${item.desc}</p>
@@ -100,15 +108,14 @@ function createBiblioItem(item) {
 
 function renderBibliography() {
   const container = document.querySelector(".biblio-grid");
-  container.innerHTML = bibliography
-    .map((item, index) => {
-      return `
-        <div class="biblio-item" style="animation-delay: ${index * 0.15}s">
-          <img src="${item.img}" alt="${item.title}">
-          <h3>${item.title} (${item.year})</h3>
-          <p>${item.desc}</p>
-        </div>
-      `;
-    })
-    .join("");
+  if (!container) return;
+
+  // Insert items
+  container.innerHTML = bibliography.map(createBiblioItem).join("");
+
+  // Ensure animations run (in case any global rule paused them)
+  const items = container.querySelectorAll(".biblio-item");
+  items.forEach((el) => {
+    el.style.animationPlayState = "running";
+  });
 }
