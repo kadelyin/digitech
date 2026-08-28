@@ -2,8 +2,8 @@
 window.addEventListener("load", async () => {
   const timeline = [
     { id: "openingAnimation", delay: 0 },
-    { id: "banner", delay: 600 },
-    { id: "navButton", delay: 600 },
+    { id: "banner", delay: 200 },
+    { id: "navButton", delay: 200 },
   ];
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,29 +25,90 @@ window.addEventListener("load", async () => {
   }
 });
 
-// navigation menu
+// navigation menu + bibliography
 document.addEventListener("DOMContentLoaded", () => {
   const navButton = document.getElementById("navButton");
   const navSection = document.getElementById("navSection");
+  const openingAnimation = document.getElementById("openingAnimation");
 
-  // toggle menu when clicking the menu button
   navButton.addEventListener("click", (event) => {
     navSection.classList.toggle("active");
-    event.stopPropagation(); // stops click from bubbling to document instantly
+    navButton.classList.toggle("active");
+    openingAnimation.classList.toggle("active");
+    event.stopPropagation();
   });
 
-  // handle all background clicks on the screen
   document.addEventListener("click", (event) => {
-    // only run if the menu is actually open
     if (navSection.classList.contains("active")) {
-      // check if the user specifically clicked a link tag inside the nav
       const clickedALink =
         event.target.tagName === "A" && navSection.contains(event.target);
 
-      // if they didn't click a link, close the menu
       if (!clickedALink) {
         navSection.classList.remove("active");
+        navButton.classList.remove("active");
+        openingAnimation.classList.remove("active");
       }
     }
   });
+
+  renderBibliography();
 });
+
+// bibliography
+const bibliography = [
+  {
+    title: "1",
+    year: 2026,
+    desc: "desc",
+    img: "../photos/Screenshot 2026-07-31 144338.png",
+  },
+  {
+    title: "2",
+    year: 2026,
+    desc: "desc",
+    img: "../photos/Screenshot 2026-07-31 144407.png",
+  },
+  {
+    title: "3",
+    year: 2026,
+    desc: "desc",
+    img: "../photos/Screenshot 2026-07-31 144426.png",
+  },
+  {
+    title: "4",
+    year: 2026,
+    desc: "desc",
+    img: "../photos/Screenshot 2026-07-31 144433.png",
+  },
+  {
+    title: "5",
+    year: 2026,
+    desc: "desc",
+    img: "../photos/Screenshot 2026-07-31 144444.png",
+  },
+];
+
+function createBiblioItem(item) {
+  return `
+    <div class="biblio-item">
+      <img src="${item.img}" alt="${item.title}">
+      <h3>${item.title} (${item.year})</h3>
+      <p>${item.desc}</p>
+    </div>
+  `;
+}
+
+function renderBibliography() {
+  const container = document.querySelector(".biblio-grid");
+  container.innerHTML = bibliography
+    .map((item, index) => {
+      return `
+        <div class="biblio-item" style="animation-delay: ${index * 0.15}s">
+          <img src="${item.img}" alt="${item.title}">
+          <h3>${item.title} (${item.year})</h3>
+          <p>${item.desc}</p>
+        </div>
+      `;
+    })
+    .join("");
+}
