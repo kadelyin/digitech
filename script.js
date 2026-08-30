@@ -64,31 +64,31 @@ document.addEventListener("DOMContentLoaded", () => {
 // bibliography data
 const bibliography = [
   {
-    title: "1",
+    title: "Lorem ipsum.",
     year: 2026,
     desc: "desc",
     img: "../photos/Screenshot 2026-07-31 144338.png",
   },
   {
-    title: "2",
+    title: "Lorem ipsum.",
     year: 2026,
     desc: "desc",
     img: "../photos/Screenshot 2026-07-31 144407.png",
   },
   {
-    title: "3",
+    title: "Lorem ipsum.",
     year: 2026,
     desc: "desc",
     img: "../photos/Screenshot 2026-07-31 144426.png",
   },
   {
-    title: "4",
+    title: "Lorem ipsum.",
     year: 2026,
     desc: "desc",
     img: "../photos/Screenshot 2026-07-31 144433.png",
   },
   {
-    title: "5",
+    title: "Lorem ipsum.",
     year: 2026,
     desc: "desc",
     img: "../photos/Screenshot 2026-07-31 144444.png",
@@ -96,7 +96,7 @@ const bibliography = [
 ];
 
 function createBiblioItem(item, index) {
-  const delay = (index * 0.15).toFixed(2) + "s";
+  const delay = (index * 0.3).toFixed(2) + "s";
   return `
     <div class="biblio-item" style="animation-delay: ${delay};">
       <img src="${item.img}" alt="${item.title}">
