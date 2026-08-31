@@ -1,4 +1,3 @@
-// loading animations + render after navButton starts
 window.addEventListener("load", async () => {
   const timeline = [
     { id: "openingAnimation", delay: 0 },
@@ -23,16 +22,13 @@ window.addEventListener("load", async () => {
       element.style.animationPlayState = "running";
     }
 
-    // start rendering bibliography right after we start the navButton animation
     if (step.id === "navButton") {
-      // small extra delay so navButton entrance feels finished before items appear
       await wait(200);
       renderBibliography();
     }
   }
 });
 
-// navigation menu
 document.addEventListener("DOMContentLoaded", () => {
   const navButton = document.getElementById("navButton");
   const navSection = document.getElementById("navSection");
@@ -57,43 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-
-  // Do NOT call renderBibliography() here — it's called after navButton animation in window.load
 });
 
-// bibliography data
-const bibliography = [
-  {
-    title: "Lorem ipsum.",
-    year: 2026,
-    desc: "desc",
-    img: "../photos/Screenshot 2026-07-31 144338.png",
-  },
-  {
-    title: "Lorem ipsum.",
-    year: 2026,
-    desc: "desc",
-    img: "../photos/Screenshot 2026-07-31 144407.png",
-  },
-  {
-    title: "Lorem ipsum.",
-    year: 2026,
-    desc: "desc",
-    img: "../photos/Screenshot 2026-07-31 144426.png",
-  },
-  {
-    title: "Lorem ipsum.",
-    year: 2026,
-    desc: "desc",
-    img: "../photos/Screenshot 2026-07-31 144433.png",
-  },
-  {
-    title: "Lorem ipsum.",
-    year: 2026,
-    desc: "desc",
-    img: "../photos/Screenshot 2026-07-31 144444.png",
-  },
-];
+let bibliography = [];
 
 function createBiblioItem(item, index) {
   const delay = (index * 0.3).toFixed(2) + "s";
@@ -106,16 +68,44 @@ function createBiblioItem(item, index) {
   `;
 }
 
-function renderBibliography() {
+async function renderBibliography() {
   const container = document.querySelector(".biblio-grid");
   if (!container) return;
 
-  // Insert items
-  container.innerHTML = bibliography.map(createBiblioItem).join("");
+  try {
+    const response = await fetch("../photos/");
+    const htmlText = await response.text();
 
-  // Ensure animations run (in case any global rule paused them)
-  const items = container.querySelectorAll(".biblio-item");
-  items.forEach((el) => {
-    el.style.animationPlayState = "running";
-  });
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlText, "text/html");
+
+    const links = Array.from(doc.querySelectorAll("a"));
+    const imageFiles = links
+      .map((link) => link.getAttribute("href"))
+      .filter((href) => href && href.match(/\.(png|jpe?g|gif|webp|svg)$/i));
+
+    bibliography = imageFiles.map((href) => {
+      const fileName = href.split("/").pop();
+      const cleanTitle = decodeURIComponent(fileName).replace(/\.[^/.]+$/, "");
+
+      return {
+        title: cleanTitle,
+        year: 2026,
+        desc: "desc",
+        img: `../photos/${fileName.trim()}`,
+      };
+    });
+
+    container.innerHTML = bibliography.map(createBiblioItem).join("");
+
+    const items = container.querySelectorAll(".biblio-item");
+    items.forEach((el) => {
+      el.style.animationPlayState = "running";
+    });
+
+    console.log(`Loaded ${bibliography.length} photos automatically!`);
+  } catch (error) {
+    console.error("Failed to automatically read the photos directory:", error);
+    container.innerHTML = `<p>Error loading bibliography items.</p>`;
+  }
 }

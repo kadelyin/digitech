@@ -4,8 +4,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-color: #0764d6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #bannerContainer {
@@ -183,14 +181,15 @@ body {
   width: 100%;
   min-height: 100vh;
   padding: 10px 10px;
-  background-color: #f89b29;
+  /* background-color: #f89b29; */
+  background-color: #ffffff;
   margin-top: 75px;
   box-sizing: border-box;
 }
 
 .biblio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
   width: 100%;
   max-width: 1400px;
@@ -210,11 +209,10 @@ body {
 
 .biblio-item img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
   display: block;
-  /* border-radius: 6px;
-  border: 2px solid #ddd; */
 }
 
 .biblio-item h3 {
@@ -223,7 +221,7 @@ body {
   font-weight: 600;
   font-size: 1.3rem;
   margin: 0 0 0 0;
-  color: #d4186d;
+  color: #0764d6;
 }
 
 .biblio-item p {
@@ -231,7 +229,7 @@ body {
   font-family: "Basic", sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  color: #d4186d90;
+  color: #0764d690;
   margin: 0;
 }
 
