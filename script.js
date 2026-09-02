@@ -1,6 +1,13 @@
+//  helpers
+const debugEnabled = true;
+function debugPrint(string) {
+  if (debugEnabled == true) console.log(string);
+}
+
 window.addEventListener("load", () => {
   const openingAnimation = document.getElementById("openingAnimation");
   const banner = document.getElementById("banner");
+  const pageTitle = document.getElementById("page-title");
   const navButton = document.getElementById("navButton");
   const topAnimation = document.getElementById("topAnimation");
 
@@ -27,6 +34,7 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     if (banner) banner.style.animationPlayState = "running";
     if (navButton) navButton.style.animationPlayState = "running";
+    if (pageTitle) pageTitle.style.animationPlayState = "running";
   }, 400);
 
   // load bibliography
@@ -225,6 +233,8 @@ function renderBibliography() {
   const container = document.querySelector(".biblio-grid");
   if (!container) return;
 
+  debugPrint("loading items");
+
   let htmlContent = "";
 
   for (let i = 0; i < bibliography.length; i++) {
@@ -240,5 +250,22 @@ function renderBibliography() {
     `;
   }
 
+  debugPrint(htmlContent);
   container.innerHTML = htmlContent;
 }
+
+// preview
+document.addEventListener("click", (event) => {
+  const preview = document.getElementById("imagePreview");
+  const previewImg = document.getElementById("imagePreviewImg");
+
+  if (event.target.matches(".biblio-item img")) {
+    previewImg.src = event.target.src;
+    preview.classList.add("active");
+    return;
+  }
+
+  if (preview.classList.contains("active")) {
+    preview.classList.remove("active");
+  }
+});

@@ -1,14 +1,27 @@
+/* \\ BODY // */
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #0764d6;
+  background-color: var(--blue);
 }
+/* \\ end sect // */
 
+/* \\ ROOT // */
+:root {
+  --blue: #0764d6;
+  --blue-dark: #0554b4;
+  --pink: #f0006c;
+  --green: #00f084;
+  --tile-size: 220px;
+}
+/* \\ end sect // */
+
+/* \\ BANNER // */
 #bannerContainer {
   position: fixed;
-  /* background-color: #0764d6; */
+  /* background-color: var(--blue);; */
   top: 4px;
   left: 5px;
   margin: 10px;
@@ -19,8 +32,8 @@ body {
 }
 
 #bannerContainer:hover {
-  background-color: #f0006c;
-  outline: 5px solid #f0006c;
+  background-color: var(--pink);
+  outline: 5px solid var(--pink);
 }
 
 #banner {
@@ -36,7 +49,9 @@ body {
   animation: yIn 2s ease-out forwards;
   animation-play-state: paused;
 }
+/* \\ end sect // */
 
+/* \\ OPENING ANIMATION // */
 #openingAnimation {
   position: fixed;
   top: 0;
@@ -47,7 +62,7 @@ body {
   background-image: url("assets/greenTile.png");
   background-repeat: repeat;
   background-position: 0 0;
-  background-size: 220px 220px;
+  background-size: var(--tile-size);
   opacity: 1;
   pointer-events: none;
   animation:
@@ -60,7 +75,9 @@ body {
   z-index: 6px;
   filter: blur(4px);
 }
+/* \\ end sect // */
 
+/* \\ TOP ANIMATION // */
 #topAnimation {
   position: sticky;
   top: 0;
@@ -70,7 +87,7 @@ body {
   opacity: 1;
   background-image: url("assets/topTile.png");
   background-repeat: repeat;
-  background-size: 220px 220px;
+  background-size: var(--tile-size);
   background-position: 0 0;
 
   animation: scrollAnim 10s linear infinite;
@@ -78,7 +95,9 @@ body {
 
   pointer-events: none;
 }
+/* \\ end sect // */
 
+/* \\ NAV // */
 #navButton {
   position: fixed;
   top: 4px;
@@ -90,7 +109,7 @@ body {
   height: auto;
   border-radius: 6px;
   max-width: 44px;
-  /* background-color: #0764d6; */
+  /* background-color: var(--blue);; */
   background-image: url("assets/menu-invert.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -105,7 +124,7 @@ body {
 }
 
 #navButton:hover {
-  background-color: #f0006c;
+  background-color: var(--pink);
 }
 
 #navSection {
@@ -115,7 +134,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: 4;
-  background-color: #0554b4;
+  background-color: var(--blue-dark);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s ease;
@@ -149,7 +168,7 @@ body {
   text-decoration: none;
   font-family: "Archivo Black", sans-serif;
   font-size: clamp(2rem, 8vw, 3.5rem);
-  color: #00f084;
+  color: var(--green);
   display: block;
   width: 100%;
   border-radius: 10px;
@@ -157,17 +176,17 @@ body {
 }
 
 #navSection ul li a:hover {
-  color: #f0006c;
-  background-color: #00f084;
+  color: var(--pink);
+  background-color: var(--green);
 }
 
 #navSection ul li a.current {
-  text-decoration: underline solid #00f084 5px;
+  text-decoration: underline solid var(--green) 5px;
   text-underline-offset: 10px;
 }
 
 #navSection ul li a.current:hover {
-  text-decoration: underline solid #f0006c 5px;
+  text-decoration: underline solid var(--pink) 5px;
 }
 
 #navSection ul li.bottom-group {
@@ -183,18 +202,20 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: clamp(1.2rem, 4vw, 2rem);
-  color: #00f084;
+  color: var(--green);
   display: inline-block;
   width: auto;
   padding: 5px 10px;
 }
 
 #navSection ul li a.bottomNav:hover {
-  color: #f0006c;
-  background-color: #00f084;
+  color: var(--pink);
+  background-color: var(--green);
   font-weight: 600;
 }
+/* \\ end sect // */
 
+/* \\ BIBILOGRAPHY // */
 #bibliography {
   position: relative;
   z-index: 1;
@@ -209,11 +230,13 @@ body {
 
 .biblio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 40px;
   width: 100%;
   /* max-width: 1400px; */
-  margin-left: 0;
+  margin: 0;
+  padding-left: 5px;
+  padding-right: 5px;
   margin-right: auto;
   align-items: start;
 }
@@ -229,17 +252,37 @@ body {
 
 .biblio-item img {
   width: 100%;
-  height: auto;
-  aspect-ratio: auto;
-  object-fit: contain;
-  border-radius: 0;
-  display: block;
-  transition: all 0.3s ease;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: all 0.1s ease;
 }
 
 .biblio-item img:hover {
-  scale: 0.9;
-  border-radius: 20px;
+  transform: scale(1.03);
+  border-radius: 14px;
+}
+
+#page-title {
+  font-family: "Archivo Black", sans-serif;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  text-align: left;
+  letter-spacing: -2px;
+  margin-top: -15px;
+  margin-bottom: 0;
+  margin-left: 3px;
+  background-image: url("assets/topTile.png");
+  background-repeat: repeat;
+  background-size: var(--tile-size);
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation:
+    scrollAnim 10s linear infinite,
+    yIn 2s ease-out forwards;
+  animation-play-state: paused;
 }
 
 .biblio-item h3 {
@@ -247,6 +290,7 @@ body {
   font-family: "Archivo Black", sans-serif;
   font-weight: 600;
   font-size: 1.3rem;
+  letter-spacing: -2px;
   margin: 0;
   color: #0764d6;
 }
@@ -259,7 +303,43 @@ body {
   color: #0764d690;
   margin: 0;
 }
+/* \\ end sect // */
 
+/* \\ IMAGE PREVIEW // */
+#imagePreview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+#imagePreview.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#imagePreview img {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 0 100px var(--blue-dark);
+}
+
+/* \\ end sect // */
+
+/* \\ KEYFRAMES // */
 @keyframes yIn {
   0% {
     opacity: 0;
@@ -299,7 +379,9 @@ body {
     transform: translateY(0);
   }
 }
+/* \\ end sect // */
 
+/* \\ AUTO SIZING // */
 @media (max-width: 900px) {
   .biblio-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -319,3 +401,4 @@ body {
     width: 120px;
   }
 }
+/* \\ end sect // */
