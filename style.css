@@ -237,7 +237,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Fixed the typo from .biblo-item to .biblio-item */
 .biblio-item img:hover {
   scale: 0.9;
   border-radius: 20px;

@@ -9,7 +9,7 @@ window.addEventListener("load", () => {
 
     const page = document.body.dataset.page;
 
-    // Only delete on pages that should remove it
+    // only delete on pages that should remove it
     const shouldDelete = page === "bibliography";
 
     if (shouldDelete) {
@@ -23,13 +23,13 @@ window.addEventListener("load", () => {
     topAnimation.style.animationPlayState = "running"; // fixed + synced
   }
 
-  // Banner + nav button fade in slightly later
+  // banner + nav button fade in slightly later
   setTimeout(() => {
     if (banner) banner.style.animationPlayState = "running";
     if (navButton) navButton.style.animationPlayState = "running";
   }, 400);
 
-  // Load bibliography
+  // load bibliography
   setTimeout(() => {
     renderBibliography();
   }, 600);
