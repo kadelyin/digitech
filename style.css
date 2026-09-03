@@ -221,7 +221,7 @@ body {
   z-index: 1;
   width: 100%;
   min-height: 100vh;
-  padding: 10px 10px;
+  padding: 10px 20px;
   /* background-color: #f89b29; */
   background-color: #ffffff;
   margin-top: 0;
@@ -230,13 +230,11 @@ body {
 
 .biblio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 40px;
   width: 100%;
   /* max-width: 1400px; */
   margin: 0;
-  padding-left: 5px;
-  padding-right: 5px;
   margin-right: auto;
   align-items: start;
 }
@@ -266,7 +264,7 @@ body {
 #page-title {
   font-family: "Archivo Black", sans-serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
-  text-align: center;
+  text-align: left;
   letter-spacing: -2px;
   margin-top: -15px;
   margin-bottom: 0;
