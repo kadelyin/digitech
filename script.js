@@ -13,6 +13,7 @@ window.addEventListener("load", () => {
 
   if (openingAnimation) {
     openingAnimation.style.animationPlayState = "running";
+    if (pageTitle) pageTitle.style.animationPlayState = "running";
 
     const page = document.body.dataset.page;
 
@@ -34,7 +35,6 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     if (banner) banner.style.animationPlayState = "running";
     if (navButton) navButton.style.animationPlayState = "running";
-    if (pageTitle) pageTitle.style.animationPlayState = "running";
   }, 400);
 
   // load bibliography
@@ -63,6 +63,7 @@ window.addEventListener("load", () => {
         event.target.tagName === "A" && navSection.contains(event.target);
 
       if (!clickedALink) {
+        navSection.classList.remove("remove"); // altered safely
         navSection.classList.remove("active");
         navButton.classList.remove("active");
 
@@ -74,159 +75,18 @@ window.addEventListener("load", () => {
   });
 });
 
-// list of your photo items
-const bibliography = [
-  {
-    title: "Photo 1",
+// AUTOMATED BIBLIOGRAPHY GENERATION
+const totalPhotos = 78; // Set this to your maximum number of photos
+const bibliography = [];
+
+for (let i = 1; i <= totalPhotos; i++) {
+  bibliography.push({
+    title: `Photo ${i}`,
     year: 2026,
-    desc: "Description 1",
-    img: "../photos/photo1.png",
-  },
-  {
-    title: "Photo 2",
-    year: 2026,
-    desc: "Description 2",
-    img: "../photos/photo2.png",
-  },
-  {
-    title: "Photo 3",
-    year: 2026,
-    desc: "Description 3",
-    img: "../photos/photo3.png",
-  },
-  {
-    title: "Photo 4",
-    year: 2026,
-    desc: "Description 4",
-    img: "../photos/photo4.png",
-  },
-  {
-    title: "Photo 5",
-    year: 2026,
-    desc: "Description 5",
-    img: "../photos/photo5.png",
-  },
-  {
-    title: "Photo 6",
-    year: 2026,
-    desc: "Description 6",
-    img: "../photos/photo6.png",
-  },
-  {
-    title: "Photo 7",
-    year: 2026,
-    desc: "Description 7",
-    img: "../photos/photo7.png",
-  },
-  {
-    title: "Photo 8",
-    year: 2026,
-    desc: "Description 8",
-    img: "../photos/photo8.png",
-  },
-  {
-    title: "Photo 9",
-    year: 2026,
-    desc: "Description 9",
-    img: "../photos/photo9.png",
-  },
-  {
-    title: "Photo 10",
-    year: 2026,
-    desc: "Description 10",
-    img: "../photos/photo10.png",
-  },
-  {
-    title: "Photo 11",
-    year: 2026,
-    desc: "Description 11",
-    img: "../photos/photo11.png",
-  },
-  {
-    title: "Photo 12",
-    year: 2026,
-    desc: "Description 12",
-    img: "../photos/photo12.png",
-  },
-  {
-    title: "Photo 13",
-    year: 2026,
-    desc: "Description 13",
-    img: "../photos/photo13.png",
-  },
-  {
-    title: "Photo 14",
-    year: 2026,
-    desc: "Description 14",
-    img: "../photos/photo14.png",
-  },
-  {
-    title: "Photo 15",
-    year: 2026,
-    desc: "Description 15",
-    img: "../photos/photo15.png",
-  },
-  {
-    title: "Photo 16",
-    year: 2026,
-    desc: "Description 16",
-    img: "../photos/photo16.png",
-  },
-  {
-    title: "Photo 17",
-    year: 2026,
-    desc: "Description 17",
-    img: "../photos/photo17.png",
-  },
-  {
-    title: "Photo 18",
-    year: 2026,
-    desc: "Description 18",
-    img: "../photos/photo18.png",
-  },
-  {
-    title: "Photo 19",
-    year: 2026,
-    desc: "Description 19",
-    img: "../photos/photo19.png",
-  },
-  {
-    title: "Photo 20",
-    year: 2026,
-    desc: "Description 20",
-    img: "../photos/photo20.png",
-  },
-  {
-    title: "Photo 21",
-    year: 2026,
-    desc: "Description 21",
-    img: "../photos/photo21.png",
-  },
-  {
-    title: "Photo 22",
-    year: 2026,
-    desc: "Description 22",
-    img: "../photos/photo22.png",
-  },
-  {
-    title: "Photo 23",
-    year: 2026,
-    desc: "Description 23",
-    img: "../photos/photo23.png",
-  },
-  {
-    title: "Photo 24",
-    year: 2026,
-    desc: "Description 24",
-    img: "../photos/photo24.png",
-  },
-  {
-    title: "Photo 25",
-    year: 2026,
-    desc: "Description 25",
-    img: "../photos/photo25.png",
-  },
-];
+    desc: `Description ${i}`,
+    img: `../photos/photo${i}.png`, // Default to assuming it's a PNG
+  });
+}
 
 // puts the photos onto the webpage
 function renderBibliography() {
@@ -241,9 +101,11 @@ function renderBibliography() {
     const item = bibliography[i];
     const delay = (i * 0.3).toFixed(2) + "s";
 
+    // The onerror attribute triggers automatically if the PNG fails to load.
+    // It swaps the extension to .jpg seamlessly without breaking the UI.
     htmlContent += `
       <div class="biblio-item" style="animation-delay: ${delay}; animation-play-state: running;">
-        <img src="${item.img}" alt="${item.title}">
+        <img src="${item.img}" alt="${item.title}" onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');">
         <h3>${item.title} (${item.year})</h3>
         <p>${item.desc}</p>
       </div>
@@ -265,7 +127,7 @@ document.addEventListener("click", (event) => {
     return;
   }
 
-  if (preview.classList.contains("active")) {
+  if (preview && preview.classList.contains("active")) {
     preview.classList.remove("active");
   }
 });
