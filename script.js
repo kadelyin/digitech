@@ -18,7 +18,7 @@ window.addEventListener("load", () => {
     const page = document.body.dataset.page;
 
     // only delete on pages that should remove it
-    const shouldDelete = page === "bibliography";
+    const shouldDelete = page === "bibliography" || page === "gallery";
 
     if (shouldDelete) {
       openingAnimation.addEventListener("animationend", () => {
@@ -79,18 +79,22 @@ window.addEventListener("load", () => {
 const totalPhotos = 78; // Set this to your maximum number of photos
 const bibliography = [];
 
+// Check the body data attribute to see if we are on the gallery page
+const isGallery = document.body.dataset.page === "gallery";
+const photoFolder = isGallery ? "gallery" : "bibliography";
+
 for (let i = 1; i <= totalPhotos; i++) {
   bibliography.push({
     title: `Photo ${i}`,
     year: 2026,
     desc: `Description ${i}`,
-    img: `../photos/photo${i}.png`, // Default to assuming it's a PNG
+    img: `../photos/${photoFolder}/photo${i}.png`, // Dynamically uses 'gallery' or 'bibliography'
   });
 }
 
 // puts the photos onto the webpage
 function renderBibliography() {
-  const container = document.querySelector(".biblio-grid");
+  const container = document.querySelector(".grid");
   if (!container) return;
 
   debugPrint("loading items");
@@ -101,10 +105,8 @@ function renderBibliography() {
     const item = bibliography[i];
     const delay = (i * 0.3).toFixed(2) + "s";
 
-    // The onerror attribute triggers automatically if the PNG fails to load.
-    // It swaps the extension to .jpg seamlessly without breaking the UI.
     htmlContent += `
-      <div class="biblio-item" style="animation-delay: ${delay}; animation-play-state: running;">
+      <div class="item" style="animation-delay: ${delay}; animation-play-state: running;">
         <img src="${item.img}" alt="${item.title}" onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');">
         <h3>${item.title} (${item.year})</h3>
         <p>${item.desc}</p>
@@ -121,7 +123,7 @@ document.addEventListener("click", (event) => {
   const preview = document.getElementById("imagePreview");
   const previewImg = document.getElementById("imagePreviewImg");
 
-  if (event.target.matches(".biblio-item img")) {
+  if (event.target.matches(".item img")) {
     previewImg.src = event.target.src;
     preview.classList.add("active");
     return;

@@ -215,8 +215,8 @@ body {
 }
 /* \\ end sect // */
 
-/* \\ BIBILOGRAPHY // */
-#bibliography {
+/* \\ photoSect // */
+#photoSect {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -228,7 +228,7 @@ body {
   box-sizing: border-box;
 }
 
-.biblio-grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 40px;
@@ -239,7 +239,7 @@ body {
   align-items: start;
 }
 
-.biblio-item {
+.item {
   position: relative;
   z-index: 3;
   text-align: left;
@@ -248,15 +248,16 @@ body {
   will-change: transform, opacity;
 }
 
-.biblio-item img {
+.item img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 10px;
   transition: all 0.1s ease;
+  user-select: none;
 }
 
-.biblio-item img:hover {
+.item img:hover {
   transform: scale(1.03);
   border-radius: 14px;
 }
@@ -283,7 +284,7 @@ body {
   animation-play-state: paused;
 }
 
-.biblio-item h3 {
+.item h3 {
   text-transform: uppercase;
   font-family: "Archivo Black", sans-serif;
   font-weight: 600;
@@ -293,7 +294,7 @@ body {
   color: #0764d6;
 }
 
-.biblio-item p {
+.item p {
   text-transform: uppercase;
   font-family: "Basic", sans-serif;
   font-weight: 600;
@@ -318,6 +319,7 @@ body {
   pointer-events: none;
   transition: opacity 0.3s ease;
   z-index: 999;
+  user-select: none;
 }
 
 #imagePreview.active {
@@ -333,6 +335,7 @@ body {
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 0 100px var(--blue-dark);
+  user-select: none;
 }
 
 /* \\ end sect // */
