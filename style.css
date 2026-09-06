@@ -16,6 +16,23 @@ body {
   --green: #00f084;
   --tile-size: 220px;
 }
+
+.archivo-black {
+  text-transform: uppercase;
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  /* letter-spacing: -2px; */
+  margin: 0;
+}
+
+.basic {
+  /* text-transform: uppercase; */
+  font-family: "Basic", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
 /* \\ end sect // */
 
 /* \\ BANNER // */
@@ -340,7 +357,7 @@ body {
 /* \\ end sect // */
 
 /* \\ ABOUT // */
-.pageSect { 
+.pageSect {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -350,6 +367,7 @@ body {
   background-color: #ffffff;
   box-sizing: border-box;
 }
+/* \\ end sect // */
 
 /* \\ KEYFRAMES // */
 @keyframes yIn {
