@@ -311,7 +311,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--blue);
+  background: color-mix(var(--blue) 30%, transparent);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -328,8 +328,8 @@ body {
 }
 
 #imagePreview img {
-  max-width: 100vw;
-  max-height: 100vh;
+  max-width: 90vw;
+  max-height: 90vh;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -337,8 +337,19 @@ body {
   box-shadow: 0 0 100px var(--blue-dark);
   user-select: none;
 }
-
 /* \\ end sect // */
+
+/* \\ ABOUT // */
+.pageSect { 
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px 20px;
+  /* background-color: #f89b29; */
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
 
 /* \\ KEYFRAMES // */
 @keyframes yIn {

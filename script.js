@@ -75,11 +75,11 @@ window.addEventListener("load", () => {
   });
 });
 
-// AUTOMATED BIBLIOGRAPHY GENERATION
-const totalPhotos = 78; // Set this to your maximum number of photos
+// automated image generation
+const totalPhotos = 78; // max amount of photos
 const bibliography = [];
 
-// Check the body data attribute to see if we are on the gallery page
+// check to see if we're on the right page
 const isGallery = document.body.dataset.page === "gallery";
 const photoFolder = isGallery ? "gallery" : "bibliography";
 
@@ -88,7 +88,7 @@ for (let i = 1; i <= totalPhotos; i++) {
     title: `Photo ${i}`,
     year: 2026,
     desc: `Description ${i}`,
-    img: `../photos/${photoFolder}/photo${i}.png`, // Dynamically uses 'gallery' or 'bibliography'
+    img: `../photos/${photoFolder}/photo${i}.png`, // uses 'gallery' or 'bibliography'
   });
 }
 
@@ -97,7 +97,7 @@ function renderBibliography() {
   const container = document.querySelector(".grid");
   if (!container) return;
 
-  debugPrint("loading items");
+  debugPrint("renderBibliography fired");
 
   let htmlContent = "";
 
@@ -118,7 +118,7 @@ function renderBibliography() {
   container.innerHTML = htmlContent;
 }
 
-// preview
+// preview component
 document.addEventListener("click", (event) => {
   const preview = document.getElementById("imagePreview");
   const previewImg = document.getElementById("imagePreviewImg");
