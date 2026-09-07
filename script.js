@@ -18,7 +18,7 @@ window.addEventListener("load", () => {
     const page = document.body.dataset.page;
 
     // only delete on pages that should remove it
-    const shouldDelete = page === "bibliography" || page === "gallery";
+    const shouldDelete = page === "bibliography" || page === "gallery" || page === "about";
 
     if (shouldDelete) {
       openingAnimation.addEventListener("animationend", () => {
