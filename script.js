@@ -1,85 +1,16 @@
-//  helpers
+// helpers
 const debugEnabled = true;
+
 function debugPrint(string) {
   if (debugEnabled == true) console.log(string);
 }
 
-window.addEventListener("load", () => {
-  const openingAnimation = document.getElementById("openingAnimation");
-  const banner = document.getElementById("banner");
-  const pageTitle = document.getElementById("page-title");
-  const navButton = document.getElementById("navButton");
-  const topAnimation = document.getElementById("topAnimation");
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
 
-  if (openingAnimation) {
-    openingAnimation.style.animationPlayState = "running";
-    if (pageTitle) pageTitle.style.animationPlayState = "running";
-
-    const page = document.body.dataset.page;
-
-    // only delete on pages that should remove it
-    const shouldDelete = page === "bibliography" || page === "gallery" || page === "about";
-
-    if (shouldDelete) {
-      openingAnimation.addEventListener("animationend", () => {
-        openingAnimation.remove();
-      });
-    }
-  }
-
-  if (topAnimation) {
-    topAnimation.style.animationPlayState = "running"; // fixed + synced
-  }
-
-  // banner + nav button fade in slightly later
-  setTimeout(() => {
-    if (banner) banner.style.animationPlayState = "running";
-    if (navButton) navButton.style.animationPlayState = "running";
-  }, 400);
-
-  // load bibliography
-  setTimeout(() => {
-    renderBibliography();
-  }, 600);
-
-  const navSection = document.getElementById("navSection");
-
-  if (navButton && navSection && openingAnimation) {
-    navButton.addEventListener("click", (event) => {
-      navSection.classList.toggle("active");
-      navButton.classList.toggle("active");
-
-      if (openingAnimation && document.body.contains(openingAnimation)) {
-        openingAnimation.classList.toggle("active");
-      }
-
-      event.stopPropagation();
-    });
-  }
-
-  document.addEventListener("click", (event) => {
-    if (navSection && navSection.classList.contains("active")) {
-      const clickedALink =
-        event.target.tagName === "A" && navSection.contains(event.target);
-
-      if (!clickedALink) {
-        navSection.classList.remove("remove"); // altered safely
-        navSection.classList.remove("active");
-        navButton.classList.remove("active");
-
-        if (openingAnimation && document.body.contains(openingAnimation)) {
-          openingAnimation.classList.remove("active");
-        }
-      }
-    }
-  });
-});
-
-// automated image generation
-const totalPhotos = 78; // max amount of photos
+const totalPhotos = 78;
 const bibliography = [];
-
-// check to see if we're on the right page
 const isGallery = document.body.dataset.page === "gallery";
 const photoFolder = isGallery ? "gallery" : "bibliography";
 
@@ -88,17 +19,15 @@ for (let i = 1; i <= totalPhotos; i++) {
     title: `Photo ${i}`,
     year: 2026,
     desc: `Description ${i}`,
-    img: `../photos/${photoFolder}/photo${i}.png`, // uses 'gallery' or 'bibliography'
+    img: `../photos/${photoFolder}/photo${i}.png`,
   });
 }
 
-// puts the photos onto the webpage
 function renderBibliography() {
   const container = document.querySelector(".grid");
-  if (!container) return;
+  if (!container) return Promise.resolve();
 
   debugPrint("renderBibliography fired");
-
   let htmlContent = "";
 
   for (let i = 0; i < bibliography.length; i++) {
@@ -106,16 +35,88 @@ function renderBibliography() {
     const delay = (i * 0.3).toFixed(2) + "s";
 
     htmlContent += `
-      <div class="item" style="animation-delay: ${delay}; animation-play-state: running;">
-        <img src="${item.img}" alt="${item.title}" onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');">
-        <h3>${item.title} (${item.year})</h3>
-        <p>${item.desc}</p>
-      </div>
-    `;
+            <div class="item" style="animation-delay: ${delay}; animation-play-state: paused;">
+                <img src="${item.img}" alt="${item.title}" onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');">
+                <h3>${item.title} (${item.year})</h3>
+                <p>${item.desc}</p>
+            </div>
+        `;
+  }
+  container.innerHTML = htmlContent;
+
+  const images = container.querySelectorAll("img");
+  const promises = Array.from(images).map((img) => {
+    return new Promise((resolve) => {
+      if (img.complete) resolve();
+      img.addEventListener("load", resolve);
+      img.addEventListener("error", resolve);
+    });
+  });
+
+  return Promise.all(promises);
+}
+
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+
+  renderBibliography().then(() => {
+    debugPrint(
+      "All dynamic images loaded successfully. Triggering animations.",
+    );
+    startSiteAnimations();
+  });
+});
+
+function startSiteAnimations() {
+  const openingAnimation = document.getElementById("openingAnimation");
+  const banner = document.getElementById("banner");
+  const pageTitle = document.getElementById("page-title");
+  const navButton = document.getElementById("navButton");
+  const topAnimation = document.getElementById("topAnimation");
+  const navSection = document.getElementById("navSection");
+
+  document.querySelectorAll(".item").forEach((item) => {
+    item.style.animationPlayState = "running";
+  });
+
+  if (openingAnimation) {
+    openingAnimation.style.animationPlayState = "running";
+    if (pageTitle) pageTitle.style.animationPlayState = "running";
+
+    const page = document.body.dataset.page;
+    const shouldDelete =
+      page === "bibliography" || page === "gallery" || page === "about";
+
+    if (shouldDelete) {
+      openingAnimation.addEventListener("animationend", () => {
+        openingAnimation.remove();
+      });
+    }
   }
 
-  debugPrint(htmlContent);
-  container.innerHTML = htmlContent;
+  if (topAnimation) topAnimation.style.animationPlayState = "running";
+  if (banner) banner.style.animationPlayState = "running";
+  if (navButton) navButton.style.animationPlayState = "running";
+
+  if (navButton && navSection) {
+    navButton.addEventListener("click", (event) => {
+      navSection.classList.toggle("active");
+      navButton.classList.toggle("active");
+      event.stopPropagation();
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (navSection && navSection.classList.contains("active")) {
+      const clickedALink =
+        event.target.tagName === "A" && navSection.contains(event.target);
+      if (!clickedALink) {
+        navSection.classList.remove("remove");
+        navSection.classList.remove("active");
+        if (navButton) navButton.classList.remove("active");
+      }
+    }
+  });
 }
 
 // preview component
@@ -124,8 +125,8 @@ document.addEventListener("click", (event) => {
   const previewImg = document.getElementById("imagePreviewImg");
 
   if (event.target.matches(".item img")) {
-    previewImg.src = event.target.src;
-    preview.classList.add("active");
+    if (previewImg) previewImg.src = event.target.src;
+    if (preview) preview.classList.add("active");
     return;
   }
 

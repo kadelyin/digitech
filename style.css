@@ -14,14 +14,13 @@ body {
   --blue-dark: #0554b4;
   --pink: #f0006c;
   --green: #00f084;
-  --tile-size: 220px;
+  --tile-size: -220px;
 }
 
 .archivo-black {
   text-transform: uppercase;
   font-family: "Archivo Black", sans-serif;
   font-weight: 600;
-  font-size: 1.5rem;
   /* letter-spacing: -2px; */
   margin: 0;
 }
@@ -30,7 +29,6 @@ body {
   /* text-transform: uppercase; */
   font-family: "Basic", sans-serif;
   font-weight: 600;
-  font-size: 1.5rem;
   margin: 0;
 }
 
@@ -81,7 +79,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 9999;
   background-image: url("assets/greenTile.png");
   background-repeat: repeat;
   background-position: 0 0;
@@ -92,11 +90,6 @@ body {
     scrollAnim 12s linear infinite,
     opacityOut 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-play-state: paused;
-}
-
-#openingAnimation.active {
-  z-index: 6px;
-  filter: blur(4px);
 }
 /* \\ end sect // */
 
@@ -292,7 +285,7 @@ body {
   letter-spacing: -2px;
   margin-top: -15px;
   margin-bottom: 0;
-  margin-left: 3px;
+  margin-left: 1px;
   background-image: url("assets/topTile.png");
   background-repeat: repeat;
   background-size: var(--tile-size);
@@ -314,7 +307,7 @@ body {
   font-size: 1.3rem;
   letter-spacing: -1px;
   margin: 0;
-  color: #0764d6;
+  color: var(--blue);
 }
 
 .item p {
@@ -322,7 +315,7 @@ body {
   font-family: "Basic", sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  color: #0764d690;
+  color: color-mix(var(--blue) 90%, transparent);
   margin: 0;
 }
 /* \\ end sect // */
@@ -401,7 +394,7 @@ body {
     background-position: 0 0;
   }
   100% {
-    background-position: -220px -220px;
+    background-position: var(--tile-size) var(--tile-size);
   }
 }
 
