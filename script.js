@@ -60,9 +60,6 @@ window.addEventListener("load", () => {
   window.scrollTo(0, 0);
 
   renderBibliography().then(() => {
-    debugPrint(
-      "All dynamic images loaded successfully. Triggering animations.",
-    );
     startSiteAnimations();
   });
 });
@@ -85,7 +82,10 @@ function startSiteAnimations() {
 
     const page = document.body.dataset.page;
     const shouldDelete =
-      page === "bibliography" || page === "gallery" || page === "about";
+      page === "bibliography" ||
+      page === "gallery" ||
+      page === "about" ||
+      page === "contact";
 
     if (shouldDelete) {
       openingAnimation.addEventListener("animationend", () => {
@@ -132,5 +132,29 @@ document.addEventListener("click", (event) => {
 
   if (preview && preview.classList.contains("active")) {
     preview.classList.remove("active");
+  }
+});
+
+// copy text component
+const button = document.getElementById("copyBtn");
+
+button.addEventListener("click", async () => {
+  const phraseToCopy = button.getAttribute("data-phrase");
+
+  try {
+    await navigator.clipboard.writeText(phraseToCopy);
+    const originalText = button.textContent;
+    button.textContent = "copied to clipboard";
+    button.disabled = true;
+
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 2000);
+  } catch (err) {
+    console.error("Failed to copy text: ", err);
+    alert(
+      "Could not copy text automatically. Please select and copy manually.",
+    );
   }
 });

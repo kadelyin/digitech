@@ -17,10 +17,13 @@
       rel="stylesheet"
     />
     <!-- poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- metadata -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,12 +35,28 @@
     <!-- scripts -->
     <script src="../script.js" defer></script>
   </head>
-  <body>
+  <body data-page="contact">
     <div id="openingAnimation"></div>
+    <div id="topAnimation"></div>
 
     <a id="bannerContainer" href="index.html">
       <header id="banner"></header>
     </a>
+
+    <section class="pageSect">
+      <h1 id="page-title">CONTACT</h1>
+      <a
+        id="copyBtn"
+        class="poppins"
+        style="
+          font-size: 2.5rem;
+          text-decoration: underline;
+          color: var(--blue-dark);
+        "
+        data-phrase="23123kw@kuranuicollege.school.nz"
+        >23123kw@kuranuicollege.school.nz</a
+      >
+    </section>
 
     <div id="navButton"></div>
     <section id="navSection">
@@ -45,9 +64,9 @@
         <li><a href="index.html">HOME</a></li>
         <li><a href="bibliography.html">BIBLIOGRAPHY</a></li>
         <li><a href="gallery.html">GALLERY</a></li>
-        <li><a href="contact.html" class="current">CONTACT</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
         <li class="bottom-group">
-          <a href="about.html" class="bottomNav">ABOUT</a>
+          <a href="about.html" class="bottomNav current">ABOUT</a>
           <a href="index.html" class="bottomNav">SITE POLICY</a>
         </li>
       </ul>
