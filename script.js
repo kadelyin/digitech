@@ -24,20 +24,18 @@ function renderBibliography() {
   if (!container) return;
 
   debugPrint("renderBibliography fired");
+
   let htmlContent = "";
 
   for (let i = 0; i < bibliography.length; i++) {
     const item = bibliography[i];
-    const delay = (i * 0.3).toFixed(2) + "s";
+    const delay = (i * 0.1).toFixed(2) + "s";
 
     htmlContent += `
       <div class="item" style="animation-delay: ${delay}; animation-play-state: paused;">
         <img
           src="${item.img}"
           alt="${item.title}"
-          tabindex="0"
-          role="button"
-          aria-label="Open ${item.title}"
           onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');"
         >
         <h3>${item.title} (${item.year})</h3>
@@ -47,27 +45,13 @@ function renderBibliography() {
   }
 
   container.innerHTML = htmlContent;
-
-  const images = container.querySelectorAll("img");
-
-  const promises = Array.from(images).map((img) => {
-    return new Promise((resolve) => {
-      if (img.complete) resolve();
-
-      img.addEventListener("load", resolve);
-      img.addEventListener("error", resolve);
-    });
-  });
-
-  return Promise.all(promises);
 }
 
 window.addEventListener("load", () => {
   window.scrollTo(0, 0);
 
-  renderBibliography().then(() => {
-    startSiteAnimations();
-  });
+  renderBibliography();
+  startSiteAnimations();
 });
 
 function startSiteAnimations() {
@@ -85,7 +69,9 @@ function startSiteAnimations() {
   if (openingAnimation) {
     openingAnimation.style.animationPlayState = "running";
 
-    if (pageTitle) pageTitle.style.animationPlayState = "running";
+    if (pageTitle) {
+      pageTitle.style.animationPlayState = "running";
+    }
 
     const page = document.body.dataset.page;
 
@@ -102,9 +88,17 @@ function startSiteAnimations() {
     }
   }
 
-  if (topAnimation) topAnimation.style.animationPlayState = "running";
-  if (banner) banner.style.animationPlayState = "running";
-  if (navButton) navButton.style.animationPlayState = "running";
+  if (topAnimation) {
+    topAnimation.style.animationPlayState = "running";
+  }
+
+  if (banner) {
+    banner.style.animationPlayState = "running";
+  }
+
+  if (navButton) {
+    navButton.style.animationPlayState = "running";
+  }
 
   if (navButton && navSection) {
     navButton.addEventListener("click", (event) => {
@@ -115,15 +109,13 @@ function startSiteAnimations() {
 
       navButton.setAttribute("aria-expanded", open);
 
-      navButton.setAttribute(
-        "aria-label",
-        open ? "Close navigation menu" : "Open navigation menu",
-      );
-
-      navButton.setAttribute(
-        "title",
-        open ? "Close navigation menu" : "Open navigation menu",
-      );
+      if (open) {
+        navButton.setAttribute("aria-label", "Close navigation menu");
+        navButton.setAttribute("title", "Close navigation menu");
+      } else {
+        navButton.setAttribute("aria-label", "Open navigation menu");
+        navButton.setAttribute("title", "Open navigation menu");
+      }
 
       event.stopPropagation();
     });
@@ -171,6 +163,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
+// close with escape
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     const preview = document.getElementById("imagePreview");
