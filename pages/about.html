@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
   <head>
     <!-- fonts -->
@@ -9,16 +10,14 @@
       href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
+
     <!-- basic -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Basic&display=swap"
       rel="stylesheet"
     />
+
     <!-- poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
@@ -35,11 +34,17 @@
     <!-- scripts -->
     <script src="../script.js" defer></script>
   </head>
-  <body data-page="about">
-    <div id="openingAnimation"></div>
-    <div id="topAnimation"></div>
 
-    <a id="bannerContainer" href="index.html">
+  <body data-page="about">
+    <div id="openingAnimation" aria-hidden="true"></div>
+    <div id="topAnimation" aria-hidden="true"></div>
+
+    <a
+      id="bannerContainer"
+      href="index.html"
+      title="Return to the home page"
+      aria-label="kwp home"
+    >
       <header id="banner"></header>
     </a>
 
@@ -63,6 +68,7 @@
         gravida. Suspendisse augue ligula, porta id tincidunt in, fringilla ut
         dolor. Nulla facilisi.
       </p>
+
       <h2
         class="archivo-black"
         style="color: var(--blue-dark); font-size: 2rem"
@@ -83,6 +89,7 @@
         ut nulla dui. Curabitur consequat tellus commodo ipsum faucibus
         vestibulum nec at tellus.
       </p>
+
       <h2
         class="archivo-black"
         style="color: var(--blue-dark); font-size: 2rem"
@@ -102,6 +109,7 @@
         porttitor varius quis nec libero. Vivamus placerat malesuada nisi eu
         commodo.
       </p>
+
       <h2
         class="archivo-black"
         style="color: var(--blue-dark); font-size: 2rem"
@@ -124,8 +132,8 @@
         vehicula ultrices. Nulla auctor vestibulum neque, sit amet sodales quam
         porttitor ac. Suspendisse quis varius metus. Nunc sed aliquam sapien. Ut
         pulvinar imperdiet enim, nec vulputate magna laoreet eget.
-        <br />
       </p>
+
       <h2
         class="archivo-black"
         style="color: var(--blue-dark); font-size: 2rem"
@@ -148,20 +156,27 @@
       </p>
     </section>
 
-    <div id="navButton"></div>
-    <section id="navSection">
+    <button
+      id="navButton"
+      aria-label="Open navigation menu"
+      title="Open navigation menu"
+      aria-controls="navSection"
+      aria-expanded="false"
+    ></button>
+
+    <nav id="navSection" aria-label="Main navigation">
       <ul>
         <li><a href="index.html">HOME</a></li>
         <li><a href="bibliography.html">BIBLIOGRAPHY</a></li>
         <li><a href="gallery.html">GALLERY</a></li>
         <li><a href="contact.html">CONTACT</a></li>
         <li class="bottom-group">
-          <a href="about.html" class="bottomNav current">ABOUT</a>
+          <a href="about.html" class="bottomNav current" aria-current="page">
+            ABOUT
+          </a>
           <a href="index.html" class="bottomNav">SITE POLICY</a>
         </li>
       </ul>
-    </section>
-
-    <!-- <div style="height: 2000px"></div> -->
+    </nav>
   </body>
 </html>

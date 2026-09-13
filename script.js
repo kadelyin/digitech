@@ -5,10 +5,6 @@ function debugPrint(string) {
   if (debugEnabled == true) console.log(string);
 }
 
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
-
 const totalPhotos = 78;
 const bibliography = [];
 const isGallery = document.body.dataset.page === "gallery";
@@ -25,7 +21,7 @@ for (let i = 1; i <= totalPhotos; i++) {
 
 function renderBibliography() {
   const container = document.querySelector(".grid");
-  if (!container) return Promise.resolve();
+  if (!container) return;
 
   debugPrint("renderBibliography fired");
   let htmlContent = "";
@@ -35,19 +31,29 @@ function renderBibliography() {
     const delay = (i * 0.3).toFixed(2) + "s";
 
     htmlContent += `
-            <div class="item" style="animation-delay: ${delay}; animation-play-state: paused;">
-                <img src="${item.img}" alt="${item.title}" onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');">
-                <h3>${item.title} (${item.year})</h3>
-                <p>${item.desc}</p>
-            </div>
-        `;
+      <div class="item" style="animation-delay: ${delay}; animation-play-state: paused;">
+        <img
+          src="${item.img}"
+          alt="${item.title}"
+          tabindex="0"
+          role="button"
+          aria-label="Open ${item.title}"
+          onerror="if(this.src.endsWith('.png')) this.src=this.src.replace('.png', '.jpg');"
+        >
+        <h3>${item.title} (${item.year})</h3>
+        <p>${item.desc}</p>
+      </div>
+    `;
   }
+
   container.innerHTML = htmlContent;
 
   const images = container.querySelectorAll("img");
+
   const promises = Array.from(images).map((img) => {
     return new Promise((resolve) => {
       if (img.complete) resolve();
+
       img.addEventListener("load", resolve);
       img.addEventListener("error", resolve);
     });
@@ -78,9 +84,11 @@ function startSiteAnimations() {
 
   if (openingAnimation) {
     openingAnimation.style.animationPlayState = "running";
+
     if (pageTitle) pageTitle.style.animationPlayState = "running";
 
     const page = document.body.dataset.page;
+
     const shouldDelete =
       page === "bibliography" ||
       page === "gallery" ||
@@ -102,6 +110,21 @@ function startSiteAnimations() {
     navButton.addEventListener("click", (event) => {
       navSection.classList.toggle("active");
       navButton.classList.toggle("active");
+
+      const open = navSection.classList.contains("active");
+
+      navButton.setAttribute("aria-expanded", open);
+
+      navButton.setAttribute(
+        "aria-label",
+        open ? "Close navigation menu" : "Open navigation menu",
+      );
+
+      navButton.setAttribute(
+        "title",
+        open ? "Close navigation menu" : "Open navigation menu",
+      );
+
       event.stopPropagation();
     });
   }
@@ -110,10 +133,16 @@ function startSiteAnimations() {
     if (navSection && navSection.classList.contains("active")) {
       const clickedALink =
         event.target.tagName === "A" && navSection.contains(event.target);
+
       if (!clickedALink) {
-        navSection.classList.remove("remove");
         navSection.classList.remove("active");
-        if (navButton) navButton.classList.remove("active");
+
+        if (navButton) {
+          navButton.classList.remove("active");
+          navButton.setAttribute("aria-expanded", "false");
+          navButton.setAttribute("aria-label", "Open navigation menu");
+          navButton.setAttribute("title", "Open navigation menu");
+        }
       }
     }
   });
@@ -125,8 +154,15 @@ document.addEventListener("click", (event) => {
   const previewImg = document.getElementById("imagePreviewImg");
 
   if (event.target.matches(".item img")) {
-    if (previewImg) previewImg.src = event.target.src;
-    if (preview) preview.classList.add("active");
+    if (previewImg) {
+      previewImg.src = event.target.src;
+      previewImg.alt = event.target.alt;
+    }
+
+    if (preview) {
+      preview.classList.add("active");
+    }
+
     return;
   }
 
@@ -135,26 +171,52 @@ document.addEventListener("click", (event) => {
   }
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    const preview = document.getElementById("imagePreview");
+    const navSection = document.getElementById("navSection");
+    const navButton = document.getElementById("navButton");
+
+    if (preview && preview.classList.contains("active")) {
+      preview.classList.remove("active");
+      return;
+    }
+
+    if (navSection && navSection.classList.contains("active")) {
+      navSection.classList.remove("active");
+
+      if (navButton) {
+        navButton.classList.remove("active");
+        navButton.setAttribute("aria-expanded", "false");
+        navButton.setAttribute("aria-label", "Open navigation menu");
+        navButton.setAttribute("title", "Open navigation menu");
+        navButton.focus();
+      }
+    }
+  }
+});
+
 // copy text component
 const button = document.getElementById("copyBtn");
 
-button.addEventListener("click", async () => {
-  const phraseToCopy = button.getAttribute("data-phrase");
+if (button) {
+  button.addEventListener("click", async () => {
+    const phraseToCopy = button.getAttribute("data-phrase");
 
-  try {
-    await navigator.clipboard.writeText(phraseToCopy);
-    const originalText = button.textContent;
-    button.textContent = "copied to clipboard";
-    button.disabled = true;
+    try {
+      await navigator.clipboard.writeText(phraseToCopy);
 
-    setTimeout(() => {
-      button.textContent = originalText;
-      button.disabled = false;
-    }, 2000);
-  } catch (err) {
-    console.error("Failed to copy text: ", err);
-    alert(
-      "Could not copy text automatically. Please select and copy manually.",
-    );
-  }
-});
+      const originalText = button.textContent;
+
+      button.textContent = "copied to clipboard";
+      button.disabled = true;
+
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  });
+}
